@@ -1,0 +1,10 @@
+services:
+  nginx:
+      container_name: nginx
+      build:
+        context: ./nginx
+      env_file:
+        - ./nginx/.env
+      ports:
+        - 443:443
+      restart: always

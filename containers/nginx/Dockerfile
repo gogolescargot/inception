@@ -13,7 +13,7 @@ COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 
 # HTML
 RUN mkdir -p /usr/share/nginx/html
-COPY ./html/*.html /usr/share/nginx/html/
+COPY ./html /usr/share/nginx/html
 
 # PORT
 EXPOSE 443
