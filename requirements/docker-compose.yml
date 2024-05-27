@@ -25,17 +25,17 @@ services:
     networks:
       - inception
     restart: always
-    # mariadb:
-    #   container_name: mariadb
-    #   build:
-    #     context: ./mariadb
-    #   env_file:
-    #     - ./mariadb/.env
-    #   ports:
-    #     - 3306:3306
-    #   networks:
-    #     - inception
-    #   restart: always
+  mariadb:
+    container_name: mariadb
+    build:
+      context: ./mariadb
+    env_file:
+      - ./mariadb/.env
+    ports:
+      - 3306:3306
+    networks:
+      - inception
+    restart: always
 
 volumes:
   wordpress:
