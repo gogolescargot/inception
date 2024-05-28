@@ -15,7 +15,5 @@ COPY ./ssl/ggalon.42.fr.key /etc/nginx/ssl/ggalon.42.fr.key
 COPY ./conf/nginx.conf /etc/nginx/nginx.conf
 COPY ./conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
 
-
-
 # EXEC
-CMD ["nginx", "-g", "daemon off;"]
+CMD nginx -g 'daemon off;'
