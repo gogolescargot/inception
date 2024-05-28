@@ -4,7 +4,7 @@ services:
     build:
       context: ./nginx
     env_file:
-      - ./nginx/.env
+      - ./.env
     ports:
       - 443:443
     volumes:
@@ -17,7 +17,7 @@ services:
     build:
       context: ./wordpress
     env_file:
-      - ./wordpress/.env
+      - ./.env
     ports:
       - 9000:9000
     volumes:
@@ -30,7 +30,7 @@ services:
     build:
       context: ./mariadb
     env_file:
-      - ./mariadb/.env
+      - ./.env
     ports:
       - 3306:3306
     networks:

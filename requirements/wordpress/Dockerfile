@@ -1,17 +1,30 @@
-FROM alpine:3.19
+FROM debian:oldstable
 
 WORKDIR /var/www
 
-# DEPENDENCIES
-RUN apk update && apk add --no-cache wget tar php83-fpm php83-mysqli
-
-# WORDPRESS 
-RUN wget https://wordpress.org/wordpress-6.5.3.tar.gz \
-	&& tar -xvzf wordpress-6.5.3.tar.gz \
-	&& rm wordpress-6.5.3.tar.gz
-
-COPY ./conf/wordpress.conf /etc/php83/php-fpm.d/www.conf
-
+# PORT
 EXPOSE 9000
 
-CMD ["php-fpm83", "-F"]
+# DEPENDENCIES
+RUN apt update && apt upgrade && apt install -y wget tar php php-mysqli php-fpm
+
+COPY ./conf/wordpress.conf /etc/php/7.4/fpm/pool.d/www.conf
+
+# WORDPRESS CLI
+RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+	&& chmod +x wp-cli.phar \
+	&& mv wp-cli.phar /usr/local/bin/wp \
+	&& mkdir -p /etc/wordpress/
+
+# WORDPRESS
+RUN wp core download --allow-root --path=/var/www/wordpress
+
+# WORDPRESS DB
+COPY ./conf/setup.sh /etc/wordpress/setup.sh
+
+# RUN chmod +x /etc/wordpress/setup.sh \
+# 	&& /etc/wordpress/setup.sh
+
+RUN service php7.4-fpm start
+
+CMD ["php-fpm7.4", "-F"]
