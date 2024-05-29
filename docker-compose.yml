@@ -1,0 +1,63 @@
+services:
+  nginx:
+    container_name: nginx
+    build:
+      context: requirements/nginx
+    env_file:
+      - .env
+    ports:
+      - 443:443
+    secrets:
+      - cert
+      - key
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+    restart: always
+
+  wordpress:
+    container_name: wordpress
+    build:
+      context: requirements/wordpress
+    env_file:
+      - .env
+    volumes:
+      - wordpress:/var/www/wordpress
+    networks:
+      - inception
+    restart: always
+
+  mariadb:
+    container_name: mariadb
+    build:
+      context: requirements/mariadb
+    env_file:
+      - .env
+    volumes:
+      - mariadb:/var/lib/mysql
+    networks:
+      - inception
+    restart: always
+
+networks:
+  inception:
+    driver: bridge
+
+volumes:
+  mariadb:
+    driver: local
+    driver_opts:
+      device: /home/ggalon/data/mysql
+      o: bind
+  wordpress:
+    driver: local
+    driver_opts:
+      device: /home/ggalon/data/wordpress
+      o: bind
+
+secrets:
+  cert:
+    file: ./requirements/secrets/ggalon.42.fr.crt
+  key:
+    file: ./requirements/secrets/ggalon.42.fr.key

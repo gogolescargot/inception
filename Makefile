@@ -6,25 +6,32 @@
 #    By: ggalon <ggalon@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/22 16:28:38 by ggalon            #+#    #+#              #
-#    Updated: 2024/05/28 21:29:26 by ggalon           ###   ########.fr        #
+#    Updated: 2024/05/30 01:16:30 by ggalon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # RULES ========================================================================
 
 all:
-	@ echo "\n${BBlue}Calling docker compose up...${NC}"
-	@ sudo docker compose -f ./requirements/docker-compose.yml up --build -d
+	@ echo "\n${BBlue}Calling docker compose up...${NC}\n"
+	@ mkdir -p /home/ggalon/data/wordpress
+	@ mkdir -p /home/ggalon/data/mysql
+	@ sudo docker compose -f docker-compose.yml up --build -d
 	@ echo "\n${BGreen}Project Ready !${NC}\n"
 
-stop:
-	@ echo "\n${BRed}Calling docker compose down...${NC}"
-	@ sudo docker compose -f ./requirements/docker-compose.yml down
-	@ echo "\n${BRed}Project Deleted !${NC}\n"
+clean:
+	@ echo "\n${BRed}Calling docker compose down...${NC}\n"
+	@ sudo docker compose -f docker-compose.yml down
 
-re: stop all
+fclean:
+	@ echo "\n${BRed}Calling docker compose down and clear volumes...${NC}\n"
+	@ sudo docker compose -f docker-compose.yml down
+	sudo rm -rf /home/ggalon/data/wordpress
+	sudo rm -rf /home/ggalon/data/mysql
 
-.PHONY: all stop re
+re: fclean all
+
+.PHONY: all clean flclean re
 
 # COLORS =======================================================================
 
