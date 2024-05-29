@@ -8,8 +8,7 @@ RUN apt update && apt upgrade && apt install -y mariadb-server
 
 # SETUP
 COPY ./conf/setup.sh /etc/mysql/setup.sh
-RUN chmod +x /etc/mysql/setup.sh
 
-CMD service mariadb start \
-    && sh /etc/mysql/setup.sh \
-    && mysqld_safe
+RUN mkdir -p /run/mysqld && chmod 777 /run/mysqld
+
+CMD /etc/mysql/setup.sh

@@ -6,7 +6,7 @@
 #    By: ggalon <ggalon@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/22 16:28:38 by ggalon            #+#    #+#              #
-#    Updated: 2024/05/28 15:42:01 by ggalon           ###   ########.fr        #
+#    Updated: 2024/05/28 21:29:26 by ggalon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,12 @@
 
 all:
 	@ echo "\n${BBlue}Calling docker compose up...${NC}"
-	@ docker compose -f ./requirements/docker-compose.yml up --build -d
+	@ sudo docker compose -f ./requirements/docker-compose.yml up --build -d
 	@ echo "\n${BGreen}Project Ready !${NC}\n"
 
 stop:
 	@ echo "\n${BRed}Calling docker compose down...${NC}"
-	@ docker compose -f ./requirements/docker-compose.yml down
+	@ sudo docker compose -f ./requirements/docker-compose.yml down
 	@ echo "\n${BRed}Project Deleted !${NC}\n"
 
 re: stop all

@@ -1,6 +1,14 @@
 #!/bin/sh
 
-mysql -u root -e "CREATE DATABASE IF NOT EXISTS \`$DB_NAME\`;"
-mysql -u root -e "CREATE USER IF NOT EXISTS '$DB_USER'@'%' IDENTIFIED BY '$DB_PASS';"
-mysql -u root -e "GRANT ALL PRIVILEGES ON \`$DB_NAME\`.* TO '$DB_USER'@'%';"
-mysql -u root -e "FLUSH PRIVILEGES;"
+
+if [ ! -d /var/lib/mysql/$DB_NAME ]; then
+	mysqld_safe --user=root --bind-address=mariadb &
+	sleep 4
+	mariadb -u root -e "
+	CREATE DATABASE ${DB_NAME};
+	GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'%' IDENTIFIED BY '${DB_PASS}';
+	FLUSH PRIVILEGES;"
+    service mariadb stop
+	
+fi
+mysqld_safe --user=root --bind-address=mariadb

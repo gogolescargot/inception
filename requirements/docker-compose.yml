@@ -6,12 +6,13 @@ services:
     env_file:
       - ./.env
     ports:
-      - 4430:443
+      - 443:443
     volumes:
       - wordpress:/var/www/wordpress
     networks:
       - inception
     restart: always
+
   wordpress:
     container_name: wordpress
     build:
@@ -23,6 +24,7 @@ services:
     networks:
       - inception
     restart: always
+
   mariadb:
     container_name: mariadb
     build:
