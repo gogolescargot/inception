@@ -1,21 +1,10 @@
 FROM alpine:3.19
 
-# PORT
 EXPOSE 443
 
-# NGINX
 RUN apk update && apk add --no-cache nginx
 
-# SSL
-RUN mkdir -p /etc/nginx/ssl
-COPY ./ssl/ggalon.42.fr.crt /etc/nginx/ssl/ggalon.42.fr.crt
-COPY ./ssl/ggalon.42.fr.key /etc/nginx/ssl/ggalon.42.fr.key
+COPY ./tools/nginx.conf /etc/nginx/nginx.conf
+COPY ./tools/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
 
-# CONFIG
-COPY ./conf/nginx.conf /etc/nginx/nginx.conf
-COPY ./conf/fastcgi-php.conf /etc/nginx/snippets/fastcgi-php.conf
-
-
-
-# EXEC
-CMD ["nginx", "-g", "daemon off;"]
+CMD nginx -g 'daemon off;'

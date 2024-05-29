@@ -6,40 +6,37 @@
 #    By: ggalon <ggalon@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/22 16:28:38 by ggalon            #+#    #+#              #
-#    Updated: 2024/05/27 02:59:07 by ggalon           ###   ########.fr        #
+#    Updated: 2024/05/30 01:20:50 by ggalon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # RULES ========================================================================
 
 all:
-	@ echo "\n${BBlue}Calling docker compose up...${NC}"
-	@ sudo docker compose -f ./requirements/docker-compose.yml up --build -d
+	@ echo "\n${BBlue}Calling docker compose up...${NC}\n"
+	@ mkdir -p /home/ggalon/data/wordpress
+	@ mkdir -p /home/ggalon/data/mysql
+	@ sudo docker compose -f docker-compose.yml up --build -d
 	@ echo "\n${BGreen}Project Ready !${NC}\n"
 
-stop:
-	@ echo "\n${BRed}Calling docker compose down...${NC}"
-	@ sudo docker compose -f ./requirements/docker-compose.yml down
-	@ echo "\n${BRed}Project Deleted !${NC}\n"
+clean:
+	@ echo "\n${BRed}Calling docker compose down...${NC}\n"
+	@ sudo docker compose -f docker-compose.yml down
 
-re: stop all
+fclean:
+	@ echo "\n${BRed}Calling docker compose down and clear volumes...${NC}\n"
+	@ sudo docker compose -f docker-compose.yml down
+	sudo rm -rf /home/ggalon/data/wordpress
+	sudo rm -rf /home/ggalon/data/mysql
 
-.PHONY: all stop re
+re: fclean all
+
+.PHONY: all clean flclean re
 
 # COLORS =======================================================================
 
 # Reset
 NC=\033[0m
-
-# Regular
-Black=\033[0;90m
-Red=\033[0;91m
-Green=\033[0;92m
-Yellow=\033[0;93m
-Blue=\033[0;94m
-Purple=\033[0;95m
-Cyan=\033[0;96m
-White=\033[0;97m
 
 # Bold
 BBlack=\033[1;90m
@@ -50,13 +47,3 @@ BBlue=\033[1;94m
 BPurple=\033[1;95m
 BCyan=\033[1;96m
 BWhite=\033[1;97m
-
-# Background
-BGBlack=\033[0;100m
-BGRed=\033[0;101m
-BGGreen=\033[0;102m
-BGYellow=\033[0;103m
-BGBlue=\033[0;104m
-BGPurple=\033[0;105m
-BGCyan=\033[0;106m
-BGWhite=\033[0;107m

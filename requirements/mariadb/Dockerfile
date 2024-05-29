@@ -1,17 +1,11 @@
 FROM debian:oldstable
 
-# PORT
 EXPOSE 3306
 
-# DEPENDENCIES
 RUN apt update && apt upgrade && apt install -y mariadb-server
 
-# SETUP
-COPY ./conf/setup.sh /etc/mysql/setup.sh
+COPY ./tools/setup.sh /etc/mysql/setup.sh
 
-# CREATE DB
-RUN service mariadb start \
-	&& chmod +x /etc/mysql/setup.sh \
-	&& /etc/mysql/setup.sh 
+RUN mkdir -p /run/mysqld && chmod 777 /run/mysqld
 
-CMD [ "mysqld", "--bind-address=0.0.0.0" ]
+CMD /etc/mysql/setup.sh
