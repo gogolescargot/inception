@@ -4,7 +4,9 @@ if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
 
 	mysqld_safe --user=root --bind-address=0.0.0.0 &
 
-	sleep 3
+	while ! mysqladmin ping --silent; do
+		sleep 1
+	done
 
 	mariadb -u root -e "
 	CREATE DATABASE ${DB_NAME};

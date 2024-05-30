@@ -2,8 +2,6 @@
 
 if [ -z "$(ls -A /var/www/wordpress)" ]; then
 
-	sleep 10
-
 	wp-cli.phar core download \
 	--allow-root \
 	--path=/var/www/wordpress
@@ -11,14 +9,16 @@ if [ -z "$(ls -A /var/www/wordpress)" ]; then
 	chown www-data:www-data /var/www/wordpress -R
 	chmod 755 /var/www/wordpress -R
 
-	wp-cli.phar config create \
+	while ! wp-cli.phar config create \
 	--allow-root \
 	--force \
 	--dbname=$DB_NAME \
 	--dbuser=$DB_USER \
 	--dbpass=$DB_PASS \
 	--dbhost=$DB_HOST \
-	--path=/var/www/wordpress
+	--path=/var/www/wordpress; do
+		sleep 1
+	done
 
 	wp-cli.phar core install \
 	--allow-root \
