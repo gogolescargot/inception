@@ -48,12 +48,12 @@ volumes:
   mariadb:
     driver: local
     driver_opts:
-      device: /home/ggalon/data/mysql
+      device: ~/data/mysql
       o: bind
   wordpress:
     driver: local
     driver_opts:
-      device: /home/ggalon/data/wordpress
+      device: ~/data/wordpress
       o: bind
 
 secrets:

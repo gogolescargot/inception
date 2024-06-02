@@ -6,7 +6,7 @@
 #    By: ggalon <ggalon@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/22 16:28:38 by ggalon            #+#    #+#              #
-#    Updated: 2024/05/30 01:20:50 by ggalon           ###   ########.fr        #
+#    Updated: 2024/06/02 10:48:51 by ggalon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,20 +14,19 @@
 
 all:
 	@ echo "\n${BBlue}Calling docker compose up...${NC}\n"
-	@ mkdir -p /home/ggalon/data/wordpress
-	@ mkdir -p /home/ggalon/data/mysql
-	@ sudo docker compose -f docker-compose.yml up --build -d
+	@ mkdir -p ~/data/wordpress
+	@ mkdir -p ~/data/mysql
+	@ docker compose -f docker-compose.yml up --build -d
 	@ echo "\n${BGreen}Project Ready !${NC}\n"
 
 clean:
 	@ echo "\n${BRed}Calling docker compose down...${NC}\n"
-	@ sudo docker compose -f docker-compose.yml down
+	@ docker compose -f docker-compose.yml down
 
 fclean:
 	@ echo "\n${BRed}Calling docker compose down and clear volumes...${NC}\n"
-	@ sudo docker compose -f docker-compose.yml down
-	sudo rm -rf /home/ggalon/data/wordpress
-	sudo rm -rf /home/ggalon/data/mysql
+	@ docker compose -f docker-compose.yml down
+	rm -rf ~/data
 
 re: fclean all
 
