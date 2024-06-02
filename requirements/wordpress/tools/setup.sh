@@ -6,8 +6,7 @@ if [ -z "$(ls -A /var/www/wordpress)" ]; then
 	--allow-root \
 	--path=/var/www/wordpress
 
-	chown www-data:www-data /var/www/wordpress -R
-	chmod 755 /var/www/wordpress -R
+	mkdir -p /var/www/wordpress/
 
 	while ! wp-cli.phar config create \
 	--allow-root \
@@ -34,6 +33,9 @@ if [ -z "$(ls -A /var/www/wordpress)" ]; then
 	--role=author \
 	--user_pass=$WP_PASS \
 	--path=/var/www/wordpress
+
+	chown www-data:www-data /var/www/wordpress -R
+	chmod 755 /var/www/wordpress -R
 
 fi
 
