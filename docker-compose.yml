@@ -46,30 +46,6 @@ services:
       - inception
     restart: always
 
-  redis:
-    container_name: redis
-    build:
-      context: requirements/redis
-    env_file:
-      - .env
-    networks:
-      - inception
-    restart: always
-  
-    # ftp:
-    #   container_name: ftp
-    #   build:
-    #     context: requirements/ftp
-    #   env_file:
-    #     - .env
-    #   volumes:
-    #     - type: bind
-    #       source: ~/data/wordpress
-    #       target: /var/lib/mysql
-    #   networks:
-    #     - inception
-    #   restart: always
-
 networks:
   inception:
     driver: bridge
