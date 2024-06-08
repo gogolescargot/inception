@@ -46,12 +46,12 @@ PHP
 
 	chown www-data:www-data /var/www/wordpress -R
 	chmod 755 /var/www/wordpress -R
+	
+	wp-cli.phar redis enable \
+	--allow-root \
+	--path=/var/www/wordpress \
+	--force
 
 fi
-
-wp-cli.phar redis enable \
---allow-root \
---path=/var/www/wordpress \
---force
 
 php-fpm7.4 -F

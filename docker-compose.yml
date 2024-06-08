@@ -56,19 +56,23 @@ services:
       - inception
     restart: always
   
-    # ftp:
-    #   container_name: ftp
-    #   build:
-    #     context: requirements/ftp
-    #   env_file:
-    #     - .env
-    #   volumes:
-    #     - type: bind
-    #       source: ~/data/wordpress
-    #       target: /var/lib/mysql
-    #   networks:
-    #     - inception
-    #   restart: always
+  ftp:
+    container_name: ftp
+    build:
+      context: requirements/ftp
+    env_file:
+      - .env
+    ports:
+      - 20:20
+      - 21:21
+      - 10090-10100:10090-10100
+    volumes:
+      - type: bind
+        source: ~/data/wordpress
+        target: /var/www/wordpress
+    networks:
+      - inception
+    restart: always
 
 networks:
   inception:
