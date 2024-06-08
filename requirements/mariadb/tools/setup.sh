@@ -2,7 +2,9 @@
 
 if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
 
-	mysqld_safe --user=root --bind-address=0.0.0.0 &
+	mysql_install_db 
+
+	mysqld --bind-address=0.0.0.0 &
 
 	while ! mysqladmin ping --silent; do
 		sleep 1
@@ -17,4 +19,4 @@ if [ ! -d "/var/lib/mysql/$DB_NAME" ]; then
 
 fi
 
-mysqld_safe --user=root --bind-address=0.0.0.0
+mysqld --bind-address=0.0.0.0

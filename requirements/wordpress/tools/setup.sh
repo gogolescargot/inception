@@ -9,13 +9,18 @@ if [ -z "$(ls -A /var/www/wordpress)" ]; then
 	mkdir -p /var/www/wordpress/
 
 	while ! wp-cli.phar config create \
-	--allow-root \
-	--force \
-	--dbname=$DB_NAME \
-	--dbuser=$DB_USER \
-	--dbpass=$DB_PASS \
-	--dbhost=$DB_HOST \
-	--path=/var/www/wordpress; do
+		--allow-root \
+		--force \
+		--dbname=$DB_NAME \
+		--dbuser=$DB_USER \
+		--dbpass=$DB_PASS \
+		--dbhost=$DB_HOST \
+		--path=/var/www/wordpress \
+		--extra-php <<PHP
+define( 'WP_CACHE', true );
+define('WP_REDIS_HOST', 'redis');
+PHP
+	do
 		sleep 1
 	done
 
@@ -34,9 +39,19 @@ if [ -z "$(ls -A /var/www/wordpress)" ]; then
 	--user_pass=$WP_PASS \
 	--path=/var/www/wordpress
 
+	wp-cli.phar plugin install redis-cache \
+	--activate \
+	--allow-root \
+	--path=/var/www/wordpress
+
 	chown www-data:www-data /var/www/wordpress -R
 	chmod 755 /var/www/wordpress -R
 
 fi
+
+wp-cli.phar redis enable \
+--allow-root \
+--path=/var/www/wordpress \
+--force
 
 php-fpm7.4 -F

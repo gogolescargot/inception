@@ -11,7 +11,9 @@ services:
       - cert
       - key
     volumes:
-      - wordpress:/var/www/wordpress
+      - type: bind
+        source: ~/data/wordpress
+        target: /var/www/wordpress
     networks:
       - inception
     restart: always
@@ -23,7 +25,9 @@ services:
     env_file:
       - .env
     volumes:
-      - wordpress:/var/www/wordpress
+      - type: bind
+        source: ~/data/wordpress
+        target: /var/www/wordpress
     networks:
       - inception
     restart: always
@@ -35,26 +39,40 @@ services:
     env_file:
       - .env
     volumes:
-      - mariadb:/var/lib/mysql
+      - type: bind
+        source: ~/data/mysql
+        target: /var/lib/mysql
     networks:
       - inception
     restart: always
 
+  redis:
+    container_name: redis
+    build:
+      context: requirements/redis
+    env_file:
+      - .env
+    networks:
+      - inception
+    restart: always
+  
+    # ftp:
+    #   container_name: ftp
+    #   build:
+    #     context: requirements/ftp
+    #   env_file:
+    #     - .env
+    #   volumes:
+    #     - type: bind
+    #       source: ~/data/wordpress
+    #       target: /var/lib/mysql
+    #   networks:
+    #     - inception
+    #   restart: always
+
 networks:
   inception:
     driver: bridge
-
-volumes:
-  mariadb:
-    driver: local
-    driver_opts:
-      device: ~/data/mysql
-      o: bind
-  wordpress:
-    driver: local
-    driver_opts:
-      device: ~/data/wordpress
-      o: bind
 
 secrets:
   cert:

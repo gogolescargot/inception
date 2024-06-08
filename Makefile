@@ -6,7 +6,7 @@
 #    By: ggalon <ggalon@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/22 16:28:38 by ggalon            #+#    #+#              #
-#    Updated: 2024/06/02 10:48:51 by ggalon           ###   ########.fr        #
+#    Updated: 2024/06/08 08:34:12 by ggalon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ clean:
 fclean:
 	@ echo "\n${BRed}Calling docker compose down and clear volumes...${NC}\n"
 	@ docker compose -f docker-compose.yml down
-	rm -rf ~/data
+	sudo rm -rf ~/data
 
 re: fclean all
 
