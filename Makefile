@@ -6,7 +6,7 @@
 #    By: ggalon <ggalon@student.42lyon.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/22 16:28:38 by ggalon            #+#    #+#              #
-#    Updated: 2024/06/08 08:34:12 by ggalon           ###   ########.fr        #
+#    Updated: 2024/06/08 19:13:02 by ggalon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ all:
 	@ echo "\n${BBlue}Calling docker compose up...${NC}\n"
 	@ mkdir -p ~/data/wordpress
 	@ mkdir -p ~/data/mysql
+	@ mkdir -p ~/data/site
 	@ docker compose -f docker-compose.yml up --build -d
 	@ echo "\n${BGreen}Project Ready !${NC}\n"
 
