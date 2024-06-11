@@ -18,6 +18,9 @@ services:
       - type: bind
         source: ~/data/site
         target: /var/www/html
+      - type: bind
+        source: ~/data/adminer
+        target: /var/www/adminer
     networks:
       - inception
     restart: always
@@ -84,6 +87,10 @@ services:
       - .env
     ports:
       - 25565:25565
+    volumes:
+      - type: bind
+        source: ~/data/minecraft
+        target: /minecraft/world
     restart: always
 
   site:
@@ -105,8 +112,8 @@ services:
       - .env
     volumes:
       - type: bind
-        source: ~/data/site
-        target: /var/www/wordpress
+        source: ~/data/adminer
+        target: /var/www/adminer
     networks:
       - inception
     

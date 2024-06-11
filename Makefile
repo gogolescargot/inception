@@ -17,6 +17,8 @@ all:
 	@ mkdir -p ~/data/wordpress
 	@ mkdir -p ~/data/mysql
 	@ mkdir -p ~/data/site
+	@ mkdir -p ~/data/adminer
+	@ mkdir -p ~/data/minecraft
 	@ docker compose -f docker-compose.yml up --build -d
 	@ echo "\n${BGreen}Project Ready !${NC}\n"
 

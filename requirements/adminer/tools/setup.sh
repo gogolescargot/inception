@@ -1,5 +1,7 @@
-mkdir -p /var/www/adminer
+sleep 3
 
-mv /usr/share/adminer /var/www/adminer
+mkdir -p /var/www/wordpress/adminer
 
-/var/www/adminer/compile.php
+mv adminer-4.8.1-mysql.php /var/www/adminer/index.php
+
+php-fpm7.4 -F
