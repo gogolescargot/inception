@@ -74,8 +74,6 @@ services:
       - type: bind
         source: ~/data/wordpress
         target: /var/www/wordpress
-    networks:
-      - inception
     restart: always
 
   minecraft:
@@ -86,8 +84,6 @@ services:
       - .env
     ports:
       - 25565:25565
-    networks:
-      - inception
     restart: always
 
   site:
@@ -100,8 +96,20 @@ services:
       - type: bind
         source: ~/data/site
         target: /var/www/html
+
+  adminer:
+    container_name: adminer
+    build:
+      context: requirements/adminer
+    env_file:
+      - .env
+    volumes:
+      - type: bind
+        source: ~/data/site
+        target: /var/www/wordpress
     networks:
       - inception
+    
 
 networks:
   inception:
